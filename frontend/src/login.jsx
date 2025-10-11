@@ -1,13 +1,13 @@
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-function Signup() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate("");
   const handleSignup = async () => {
     try {
-      const response = await fetch("http://localhost:3000/auth/signup", {
+      const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -18,7 +18,7 @@ function Signup() {
       setMessage(data.msg);
       if(response.ok){
         setTimeout(()=>{
-          navigate("/auth/login");
+          navigate("/");
         },1000);
       }
     } catch (error) {
@@ -41,11 +41,11 @@ function Signup() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleSignup}>Sign Up</button>
+      <button onClick={handleSignup}>Login</button>
       <p>{message}</p>
-      <p>Already have an account? <a href="/auth/login">Login</a></p>
+          <p>Don't have an account? <a href="/auth/signup">Signup</a></p>
     </div>
   );
 }
 
-export default Signup;
+export default Login;
