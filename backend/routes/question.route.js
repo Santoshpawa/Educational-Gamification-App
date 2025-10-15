@@ -1,7 +1,7 @@
 // only for backend developers
 
 import express from "express";
-import { addQuestionController, getQuestionById, getQuestionController } from "../controllers/question.controller.js";
+import { addQuestionController, getQuestionByTitle, getQuestionController } from "../controllers/question.controller.js";
 
 const questionRouter = express.Router();
 
@@ -9,7 +9,7 @@ questionRouter.post("/", addQuestionController);
 
 questionRouter.get("/", getQuestionController);
 
-questionRouter.get("/:id", getQuestionById);
+questionRouter.get("/:title", getQuestionByTitle);
 
 
 export default questionRouter;

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Signup from "./signup"
 import Login from "./login"
 import Dashboard from "./dashboard"
-import QuestionDetail from "./questionDetail"
+import QuestionDashboard from "./questionDashboard"
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Dashboard/>} />
         <Route path="/auth/signup" element={<Signup/>} />
         <Route path="/auth/login" element = {<Login/>}/>
-        <Route path="/questions/id" element = {<QuestionDetail/>}/>
+        <Route path="/questions/:title" element = {<QuestionDashboard/>}/>
       </Routes>
     </Router>
       

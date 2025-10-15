@@ -12,21 +12,22 @@ async function addQuestionController(req, res) {
 async function getQuestionController(req, res) {
   try {
     let data = await questionModel.find();
-    console.log(data);
+    console.log("Hello");
     res.json(data);
   } catch (error) {
     res.json({ msg: "Something went wrong." });
   }
 }
 
-async function getQuestionById(req, res) {
+async function getQuestionByTitle(req, res) {
   try {
-    let id = req.params.id; 
-    let question = await questionModel.findOne({ _id: id });
+    let title = req.params.title; 
+    console.log(title);
+    let question = await questionModel.findOne({ title });
     res.json(question);
   } catch (error) {
     res.json({ msg: "Something went wrong." });
   }
 }
 
-export { addQuestionController, getQuestionController , getQuestionById};
+export { addQuestionController, getQuestionController , getQuestionByTitle};

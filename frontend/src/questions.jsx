@@ -16,7 +16,7 @@ function Question() {
       <h2>Questions</h2>
       {questions.map((ele) => (
         <h3 key={ele._id}>
-            <Link to ={`/questions/id=${ele._id}`}>{ele.question}</Link>
+            <Link to ={`/questions/${ele.title}`}>{ele.title}</Link>
             </h3>
       ))}
     </div>
