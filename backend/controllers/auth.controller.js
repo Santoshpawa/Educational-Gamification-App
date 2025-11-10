@@ -4,16 +4,23 @@ const saltRounds = 10;
 
 async function signController(req, res) {
   try {
-    let { name, email, password } = req.body;
-   
-    const hash = await bcrypt.hash(password, saltRounds); 
+    let { email, password } = req.body;
 
-    await userModel.create({ name, email, password: hash });
-    
-    res.json({ msg: "User signed up successfully." });
+    if (await userModel.findOne({email})) {
+      throw new Error("User already present.");
+    }
+
+    const hash = await bcrypt.hash(password, saltRounds);
+
+    await userModel.create({ email, password: hash });
+
+    res.json({ message: "User signed up successfully." });
   } catch (error) {
-    res.json({ msg: "Something went wrong." });
-    console.log(error);
+    console.log("hello");
+    if(error.message == "User already present."){
+      res.status(409).json({message:error.message});
+    }
+    res.status(500).json({ message: "Something went wrong." });
   }
 }
 
@@ -22,20 +29,19 @@ async function loginController(req, res) {
     let { email, password } = req.body;
     let user = await userModel.findOne({ email });
     if (!user) {
-      res.json({ msg: "User not found." });
+      res.json({ message: "User not found." });
       return;
     }
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      res.json({ msg: "User not found." });
+      res.status(409).json({ message: "User not found." });
       return;
-    }else{
-        res.json({msg: "User logged in successfully."})
+    } else {
+      res.json({ message: "User logged in successfully." });
     }
-
   } catch (error) {
-    res.json({msg: "Something went wrong"});
+    res.status(500).json({ message: "Something went wrong" });
   }
 }
 
-export { signController , loginController};
+export { signController, loginController };
