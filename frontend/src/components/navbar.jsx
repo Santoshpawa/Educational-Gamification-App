@@ -61,7 +61,7 @@ function Navbar() {
               onClick={toggleDropDown}
             />
             {isDropDown && (
-              <div className="absolute right-10 top-16 flex flex-col transition duration-500 rounded-sm bg-[#0a0706] ">
+              <div className="absolute right-10 top-16 flex flex-col transition duration-500 rounded-sm bg-[#0a0706] z-10">
                 <Link to="/profile" onClick={toggleDropDown} className="text-gray-500 hover:text-gray-400 mx-4">My Profile</Link>
                 <Link to="/" onClick={handleLogout} className="text-gray-500  hover:text-gray-400 mx-4 mb-2">
                   Logout
