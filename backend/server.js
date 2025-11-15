@@ -15,8 +15,10 @@ app.use("/auth",authRouter);
 // this route below is only for backend to add and update  questions in database
 app.use("/questions", questionRouter);
 
+const PORT = process.env.PORT || 3000;
+
 connectToDb().then(() => {
-  app.listen(3000, () => {
+  app.listen(PORT, () => {
     console.log("Server is listening to the requests at port 3000");
   });
 });
