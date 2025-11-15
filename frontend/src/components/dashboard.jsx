@@ -5,6 +5,7 @@ import Problem from "./problem";
 import Discuss from "./discuss";
 import Signup from "./signup";
 import Login from "./login";
+import Profile from "./profile";
 
 function Dashboard() {
   return (
@@ -17,6 +18,7 @@ function Dashboard() {
           <Route path="/discuss" element={<Discuss />}></Route>
           <Route path="/auth/signup" element={<Signup />}></Route>
           <Route path="/auth/login" element={<Login />}></Route>
+          <Route path="/profile" element={<Profile/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

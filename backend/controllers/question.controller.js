@@ -12,7 +12,6 @@ async function addQuestionController(req, res) {
 async function getQuestionController(req, res) {
   try {
     let data = await questionModel.find();
-    console.log("Hello");
     res.json(data);
   } catch (error) {
     res.json({ msg: "Something went wrong." });

@@ -20,7 +20,7 @@ function Navbar() {
   };
 
   return (
-    <div className="w-full h-14 mb-2 flex justify-center items-center bg-[#0a0706]">
+    <div className="w-full h-14 flex justify-center items-center bg-[#0a0706]">
       <div className="flex justify-center items-center font-sans text-2xl mr-auto ">
         <div>
           <img
