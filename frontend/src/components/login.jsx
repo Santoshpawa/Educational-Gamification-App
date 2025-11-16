@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leetcode from "../assets/leetcode2.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { clearError, loginUser } from "../utils/userSlice";
+import {  loginUser } from "../utils/userSlice";
 import Spinner from "./spinner";
 
 function Login() {

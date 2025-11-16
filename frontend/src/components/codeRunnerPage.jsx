@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useParams } from "react-router-dom";
+import { baseAPI } from "../utils/backendAPI";
 
 function CodeRunnerPage() {
   const { title } = useParams();
@@ -11,7 +12,7 @@ function CodeRunnerPage() {
   // ✅ Fetch question details from backend
   useEffect(() => {
     const fetchQuestion = async () => {
-      const res = await fetch(`http://localhost:3000/questions/${title}`);
+      const res = await fetch(`${baseAPI}/questions/${title}`);
       const data = await res.json();
       setQuestion(data);
       setCode(data.codeTemplate);

@@ -6,7 +6,27 @@ import authRouter from "./routes/auth.route.js";
 import questionRouter from "./routes/question.route.js";
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173', // Keep local for testing
+  'https://educational-gamification-7df52f.netlify.app' // <<< YOUR DEPLOYED FRONTEND URL
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl) or if origin is in the allowed list
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+// 2. Apply the CORS middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 
 
