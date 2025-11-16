@@ -27,6 +27,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
+      console.log("Before login");
       const response = await fetch(`${baseAPI}/auth/login`, {
         method: "POST",
         headers: {
@@ -35,6 +36,7 @@ export const loginUser = createAsyncThunk(
         body: JSON.stringify({ email, password }),
       });
       let data = await response.json();
+      console.log("Login data:",data);
       if (!response.ok) {
         return rejectWithValue(data || "Login unsuccessful.");
       }

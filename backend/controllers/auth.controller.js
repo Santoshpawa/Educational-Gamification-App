@@ -26,6 +26,7 @@ async function signController(req, res) {
 
 async function loginController(req, res) {
   try {
+    console.log("Inside login controller");
     let { email, password } = req.body;
     let user = await userModel.findOne({ email });
     if (!user) {
