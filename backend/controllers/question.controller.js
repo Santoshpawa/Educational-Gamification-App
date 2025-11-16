@@ -12,6 +12,7 @@ async function addQuestionController(req, res) {
 
 async function getQuestionController(req, res) {
   try {
+    console.log("Porblem backend")
     let data = await questionModel.find();
     res.json(data);
   } catch (error) {

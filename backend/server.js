@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.route.js";
 import questionRouter from "./routes/question.route.js";
 
 const app = express();
+console.log("Before cors");
 const allowedOrigins = [
   'http://localhost:5173', // Keep local for testing
   'https://educational-gamification-7df52f.netlify.app' // <<< YOUR DEPLOYED FRONTEND URL
@@ -29,7 +30,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-
+console.log("after cors");
 app.use("/auth",authRouter);
 
 // this route below is only for backend to add and update  questions in database
@@ -39,6 +40,6 @@ const PORT = process.env.PORT || 3000;
 
 connectToDb().then(() => {
   app.listen(PORT, () => {
-    console.log("Server is listening to the requests at port 3000");
+    console.log(`Server is listening to the requests at port ${PORT}`);
   });
 });

@@ -14,7 +14,7 @@ function Problem() {
         console.log("in problem")
         let response = await fetch(`${baseAPI}/questions`);
         let data = await response.json();
-        console.log(data);
+        console.log("Data:",data);
         setQuestions(data);
       } catch (error) {
         console.error("Failed to fetch questions:", error);
