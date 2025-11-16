@@ -1,4 +1,4 @@
-🎮 Educational Gamification Platform
+🎮 Educational Gamification Platform   Live Link: https://educational-gamification-7df52f.netlify.app/
 
 A full-stack web application designed to enhance learning and problem-solving through gamified challenges and structured questions. The platform features user authentication, protected routes for problem-solving, and a clear distinction between available and restricted content.
 
