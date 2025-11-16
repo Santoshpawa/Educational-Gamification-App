@@ -5,6 +5,7 @@ async function addQuestionController(req, res) {
     await questionModel.create(req.body);
     res.json({ msg: "Question Added Successfully" });
   } catch (error) {
+    console.log(error);
     res.json({ msg: "Something went wrong." });
   }
 }
@@ -20,7 +21,7 @@ async function getQuestionController(req, res) {
 
 async function getQuestionByTitle(req, res) {
   try {
-    let title = req.params.title; 
+    let title = req.params.title;
     console.log(title);
     let question = await questionModel.findOne({ title });
     res.json(question);
@@ -29,4 +30,4 @@ async function getQuestionByTitle(req, res) {
   }
 }
 
-export { addQuestionController, getQuestionController , getQuestionByTitle};
+export { addQuestionController, getQuestionController, getQuestionByTitle };
