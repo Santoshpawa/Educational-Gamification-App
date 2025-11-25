@@ -1,15 +1,15 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import connectToDb from "./configs/mongo.config.js";
-import authRouter from "./routes/auth.route.js";
 import questionRouter from "./routes/question.route.js";
+import userRouter from "./routes/user.route.js";
 
 const app = express();
-console.log("Before cors");
 const allowedOrigins = [
-  'http://localhost:5173', // Keep local for testing
-  'https://educational-gamification-7df52f.netlify.app' // <<< YOUR DEPLOYED FRONTEND URL
+  "http://localhost:5173", // Keep local for testing
+  "https://educational-gamification-7df52f.netlify.app", // <<< YOUR DEPLOYED FRONTEND URL
 ];
 
 const corsOptions = {
@@ -18,20 +18,32 @@ const corsOptions = {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 // 2. Apply the CORS middleware
 app.use(cors(corsOptions));
-app.use(express.json());
 
-console.log("after cors");
-app.use("/auth",authRouter);
+app.use((err, req, res, next) => {
+  // Check if the error originated from the CORS middleware
+  if (err.message === "Not allowed by CORS") {
+    return res.status(403).json({
+      success: false,
+      message: "Access forbidden: Your origin domain is not permitted.",
+    });
+  }
+  // Pass other errors down
+  next(err);
+});
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/auth", userRouter);
 
 // this route below is only for backend to add and update  questions in database
 app.use("/questions", questionRouter);

@@ -4,6 +4,7 @@ import profile from "../assets/profile.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { logout } from "../utils/userSlice";
+import { baseAPI } from "../utils/backendAPI";
 
 function Navbar() {
   const { user } = useSelector((state) => state.auth);
@@ -14,9 +15,16 @@ function Navbar() {
     setDropDown((prev) => !prev);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout());
     setDropDown(false);
+    console.log("Before logout api call");
+    let response = await fetch(`${baseAPI}/auth/logout`, {
+      method: "GET",
+      credentials: "include",
+    });
+    console.log("REsponse:", response);
+    console.log("After logout api call");
   };
 
   return (
@@ -62,8 +70,18 @@ function Navbar() {
             />
             {isDropDown && (
               <div className="absolute right-10 top-16 flex flex-col transition duration-500 rounded-sm bg-[#0a0706] z-10">
-                <Link to="/profile" onClick={toggleDropDown} className="text-gray-500 hover:text-gray-400 mx-4">My Profile</Link>
-                <Link to="/" onClick={handleLogout} className="text-gray-500  hover:text-gray-400 mx-4 mb-2">
+                <Link
+                  to="/profile"
+                  onClick={toggleDropDown}
+                  className="text-gray-500 hover:text-gray-400 mx-4"
+                >
+                  My Profile
+                </Link>
+                <Link
+                  to="/"
+                  onClick={handleLogout}
+                  className="text-gray-500  hover:text-gray-400 mx-4 mb-2"
+                >
                   Logout
                 </Link>
               </div>
