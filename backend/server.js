@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectToDb from "./configs/mongo.config.js";
 import questionRouter from "./routes/question.route.js";
 import userRouter from "./routes/user.route.js";
+import discussonRouter from "./routes/discussion.route.js";
 
 const app = express();
 const allowedOrigins = [
@@ -47,6 +48,8 @@ app.use("/auth", userRouter);
 
 // this route below is only for backend to add and update  questions in database
 app.use("/questions", questionRouter);
+
+app.use("/discuss", discussonRouter);
 
 const PORT = process.env.PORT || 3000;
 
