@@ -4,8 +4,9 @@ import { userModel } from "../models/user.model.js";
 export async function verifyJWT(req, res, next) {
   try {
     console.log("Inside verifyJWT function");
-    console.log("request cookies", req);
-   // console.log("request header authorization", req.header("Authorization"));
+    console.log("request cookies", req.cookies?.accessToken);
+
+    // console.log("request header authorization", req.header("Authorization"));
     var token =
       req.cookies?.accessToken || req.header("Authorization").split(" ")[1];
 
