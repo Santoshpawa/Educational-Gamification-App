@@ -9,7 +9,7 @@ export async function verifyJWT(req, res, next) {
     if (!token) {
       token = req.header("Authorization")?.replace("Bearer ", "");
     }
-
+    console.log("Token:", token);
     if (!token) {
       return res.status(401).json({ message: "Please Login." });
     }
