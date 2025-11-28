@@ -3,6 +3,7 @@ import { userModel } from "../models/user.model.js";
 
 export async function verifyJWT(req, res, next) {
   try {
+    console.log("Inside verifyJWT function");
     var token =
       req.cookies?.accessToken || req.header("Authorization").split(" ")[1];
 
