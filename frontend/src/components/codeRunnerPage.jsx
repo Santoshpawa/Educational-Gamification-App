@@ -12,7 +12,13 @@ function CodeRunnerPage() {
   // ✅ Fetch question details from backend
   useEffect(() => {
     const fetchQuestion = async () => {
-      const res = await fetch(`${baseAPI}/questions/${title}`);
+      const res = await fetch(`${baseAPI}/questions/${title}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       const data = await res.json();
       setQuestion(data);
       setCode(data.codeTemplate);

@@ -32,6 +32,7 @@ function Discuss() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ title, email: user.email }), // Assuming you need to send email
+      credentials: "include",
     });
     setTitle("");
     fetchDiscussion(); // Refresh the list after sending
@@ -56,6 +57,7 @@ function Discuss() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ text: thread, email: user.email }),
+      credentials: "include",
     });
 
     // Refresh threads for the currently clicked topic
