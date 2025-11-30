@@ -10,7 +10,7 @@ questionRouter.post("/", addQuestionController);
 
 questionRouter.get("/", getQuestionController);
 
-questionRouter.get("/:title", verifyJWT ,getQuestionByTitle);
+questionRouter.get("/:title",verifyJWT,getQuestionByTitle);
 
 
 export default questionRouter; 

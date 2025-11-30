@@ -15,9 +15,9 @@ function CodeRunnerPage() {
       const res = await fetch(`${baseAPI}/questions/${title}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        credentials: "include",
+        credentials: 'include',
       });
       const data = await res.json();
       setQuestion(data);

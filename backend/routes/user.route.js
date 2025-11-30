@@ -13,6 +13,6 @@ userRouter.post("/signup", signController);
 
 userRouter.post("/login", loginController);
 
-userRouter.get("/logout", verifyJWT, logoutController);
+userRouter.get("/logout", logoutController);
 
 export default userRouter;

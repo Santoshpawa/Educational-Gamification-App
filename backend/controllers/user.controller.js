@@ -2,7 +2,9 @@ import { generateHashedPassword, userModel } from "../models/user.model.js";
 
 const options = {
   httpOnly: true,
-  secure: true,
+  secure: false,
+  sameSite: "lax",
+  path: "/",
 };
 
 async function generateAccessTokenAndRefreshToken(userId) {
@@ -67,8 +69,8 @@ async function loginController(req, res) {
 
     return res
       .status(200)
-      .cookie("accessToken", accessToken)
-      .cookie("refreshToken", refreshToken)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
       .json({
         message: "User logged in successfully.",
         user,

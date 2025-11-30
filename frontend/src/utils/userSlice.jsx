@@ -10,6 +10,7 @@ export const signupUser = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
       let data = await response.json();
@@ -32,9 +33,11 @@ export const loginUser = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
       let data = await response.json();
+      console.log("response data: ", data);
 
       if (!response.ok) {
         return rejectWithValue(data || "Login unsuccessful.");

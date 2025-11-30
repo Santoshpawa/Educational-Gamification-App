@@ -1,17 +1,20 @@
 import express from "express";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { addDiscussion, addThreads, getDiscussion, getThreads } from "../controllers/discussion.controller.js";
+import {
+  addDiscussion,
+  addThreads,
+  getDiscussion,
+  getThreads,
+} from "../controllers/discussion.controller.js";
 
 const discussonRouter = express.Router();
 
-discussonRouter.post("/", verifyJWT,addDiscussion);
-
+discussonRouter.post("/", verifyJWT, addDiscussion);
 
 discussonRouter.get("/", getDiscussion);
 
 discussonRouter.get("/:id", getThreads);
 
-discussonRouter.post("/:id",addThreads);
-
+discussonRouter.post("/:id", verifyJWT, addThreads);
 
 export default discussonRouter;
