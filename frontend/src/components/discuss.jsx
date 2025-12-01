@@ -16,33 +16,73 @@ function Discuss() {
   }, []);
 
   async function fetchDiscussion() {
-    let response = await fetch(`${baseAPI}/discuss`);
-    let { titles } = await response.json();
-    setTopics(titles);
+    try {
+      let response = await fetch(`${baseAPI}/discuss`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        console.log("Fetch discussion Response status:", response.status);
+        return;
+      }
+      console.log("Discussion response: ", response);
+      let { titles, message } = await response.json();
+      console.log("Titles:", titles);
+      console.log("Messages:", message);
+      setTopics(titles);
+    } catch (error) {
+      console.log("Error in fetching discussion:", error);
+    }
   }
 
-  async function handelSendDiscussion() {
+  async function addDiscussion() {
     if (!user) {
       alert("Login to post.");
       return;
     }
-    await fetch(`${baseAPI}/discuss`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, email: user.email }), // Assuming you need to send email
-      credentials: "include",
-    });
-    setTitle("");
-    fetchDiscussion(); // Refresh the list after sending
+    try {
+      let res = await fetch(`${baseAPI}/discuss`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, email: user.email }), // Assuming you need to send email
+        credentials: "include",
+      });
+      if (!res.ok) {
+        console.log("add discussion Response status:", res.status);
+        return;
+      }
+      console.log("raw response:", res);
+      setTitle("");
+      fetchDiscussion(); // Refresh the list after sending
+    } catch (error) {
+      console.log("Error in adding discussion:", error);
+    }
   }
 
   async function fetchThreads(id) {
     setTopicClicked(id);
-    let response = await fetch(`${baseAPI}/discuss/${id}`);
-    let { threadsFromServer } = await response.json();
-    setThreads(threadsFromServer);
+    try {
+      let response = await fetch(`${baseAPI}/discuss/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        console.log("Fetching threads Response status:", response.status);
+        return;
+      }
+      let { threadsFromServer } = await response.json();
+      setThreads(threadsFromServer);
+    } catch (error) {
+      console.log("Error in fetching threads:", error);
+    }
   }
 
   // --- CORRECTION: ensure ID is used to fetch the current topic's threads
@@ -51,21 +91,26 @@ function Discuss() {
       alert("Login to contribute a thread.");
       return;
     }
-    await fetch(`${baseAPI}/discuss/${topicId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: thread, email: user.email }),
-      credentials: "include",
-    });
+    try {
+      let response = await fetch(`${baseAPI}/discuss/${topicId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: thread, email: user.email }),
+        credentials: "include",
+      });
+      if (!response.ok) {
+        console.log("Response status of adding thread:", response.status);
+        return;
+      }
+      // Refresh threads for the currently clicked topic
+      await fetchThreads(topicId);
 
-    // Refresh threads for the currently clicked topic
-    await fetchThreads(topicId);
-
-    setTimeout(() => {
       setThread("");
-    }, 100);
+    } catch (error) {
+      console.log("Error in adding thread:", error);
+    }
   }
   // --- END: Component Logic ---
 
@@ -94,7 +139,7 @@ function Discuss() {
               onChange={(e) => setTitle(e.target.value)}
             ></textarea>
             <button
-              onClick={handelSendDiscussion}
+              onClick={addDiscussion}
               disabled={!title.trim()}
               className="w-full bg-indigo-600 text-white font-medium py-2 rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition duration-150"
             >

@@ -19,7 +19,9 @@ function CodeRunnerPage() {
         },
         credentials: 'include',
       });
+      console.log("raw Response:",res);
       const data = await res.json();
+      console.log("Response data of question:",data);
       setQuestion(data);
       setCode(data.codeTemplate);
     };

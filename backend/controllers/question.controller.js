@@ -6,7 +6,7 @@ async function addQuestionController(req, res) {
     res.json({ msg: "Question Added Successfully" });
   } catch (error) {
     console.log(error);
-    res.json({ msg: "Something went wrong." });
+    res.status(500).json({ msg: "Something went wrong in adding question." });
   }
 }
 

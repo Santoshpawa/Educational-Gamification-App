@@ -82,16 +82,21 @@ async function loginController(req, res) {
 }
 
 async function logoutController(req, res) {
-  console.log("inside logout controller");
-  await userModel.findByIdAndUpdate(req.user, {
-    $set: { refreshToken: undefined },
-  });
-
-  return res
-    .status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
-    .json({ message: "User logged out successfully" });
+  try {
+    console.log("inside logout controller");
+    console.log("User", req.user);
+    await userModel.findByIdAndUpdate(req.user, {
+      $set: { refreshToken: undefined },
+    });
+  
+    return res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json({ message: "User logged out successfully" });
+  } catch (error) {
+    console.log("Error in logging out");
+  }
 }
 
 export { signController, loginController, logoutController };

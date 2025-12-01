@@ -8,7 +8,7 @@ import {
 } from "../controllers/discussion.controller.js";
 
 const discussonRouter = express.Router();
-
+console.log("inside discuss router file");
 discussonRouter.post("/", verifyJWT, addDiscussion);
 
 discussonRouter.get("/", getDiscussion);

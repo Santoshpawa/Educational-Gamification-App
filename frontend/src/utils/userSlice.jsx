@@ -14,6 +14,7 @@ export const signupUser = createAsyncThunk(
         body: JSON.stringify({ email, password }),
       });
       let data = await response.json();
+      console.log("Login response data : ",data);
       if (!response.ok) {
         return rejectWithValue(data || "Failed to sign in.");
       }

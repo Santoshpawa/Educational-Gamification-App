@@ -3,6 +3,7 @@ import { userModel } from "../models/user.model.js";
 
 async function addDiscussion(req, res) {
   try {
+    
     const title = req.body.title;
     console.log("Title:", title);
     console.log("Req.user", req.user);
@@ -22,7 +23,9 @@ async function addDiscussion(req, res) {
 
 async function getDiscussion(req, res) {
   try {
+    
     const titles = await discussModel.find(); // array or object ?
+   
     return res.status(200).json({ titles, message: "Discussion titles" });
   } catch (error) {
     return res
@@ -33,6 +36,7 @@ async function getDiscussion(req, res) {
 
 async function getThreads(req, res) {
   try {
+    console.log("inside get threads section");
     let id = req.params.id;
     let title = await discussModel.findById(id);
     let threadsFromServer = title.threads;
@@ -48,10 +52,11 @@ async function getThreads(req, res) {
 
 async function addThreads(req, res) {
   try {
+    console.log("Inside add thread section.");
     let id = req.params.id;
     let thread = req.body;
     let title = await discussModel.findById(id);
-    let newThreads = [thread,...title.threads];
+    let newThreads = [thread, ...title.threads];
     title.threads = newThreads;
     await title.save();
     return res.status(200).json({ message: "Thread added successfully" });
