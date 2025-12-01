@@ -4,6 +4,7 @@ const options = {
   httpOnly: true,
   secure: true,
   sameSite: "lax", // Cross-Site Request Forgery: other sites can access the cookies (strict means "no")
+  path: "/",
 };
 
 async function generateAccessTokenAndRefreshToken(userId) {
@@ -88,7 +89,7 @@ async function logoutController(req, res) {
     await userModel.findByIdAndUpdate(req.user, {
       $set: { refreshToken: undefined },
     });
-  
+
     return res
       .status(200)
       .clearCookie("accessToken", options)
