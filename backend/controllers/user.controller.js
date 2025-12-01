@@ -3,7 +3,7 @@ import { generateHashedPassword, userModel } from "../models/user.model.js";
 const options = {
   httpOnly: true,
   secure: true,
-  sameSite: "lax", // Cross-Site Request Forgery: other sites can access the cookies (strict means "no")
+  sameSite: "strict", // Cross-Site Request Forgery: other sites can access the cookies (strict means "no")
 };
 
 async function generateAccessTokenAndRefreshToken(userId) {
