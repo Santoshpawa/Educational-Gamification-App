@@ -4,6 +4,7 @@ const options = {
   httpOnly: true,
   secure: true,
   sameSite: "none", // Cross-Site Request Forgery: other sites can access the cookies (strict means "no")
+  domain: ".netlify.app/",
 };
 
 async function generateAccessTokenAndRefreshToken(userId) {
