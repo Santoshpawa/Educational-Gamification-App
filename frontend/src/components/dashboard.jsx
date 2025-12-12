@@ -17,8 +17,8 @@ function Dashboard() {
           <Route path="/" element={<About />}></Route>
           <Route path="/problem" element={<Problem />}></Route>
           <Route path="/discuss" element={<Discuss />}></Route>
-          <Route path="/auth/signup" element={<Signup />}></Route>
-          <Route path="/auth/login" element={<Login />}></Route>
+          <Route path="/user/signup" element={<Signup />}></Route>
+          <Route path="/user/login" element={<Login />}></Route>
           <Route path="/profile" element={<Profile/>}></Route>
           <Route path="/questions/:title" element={<CodeRunnerPage/>}></Route>
         </Routes>

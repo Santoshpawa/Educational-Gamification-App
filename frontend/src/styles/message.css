@@ -1,0 +1,28 @@
+.message {
+  width: fit-content;
+  margin: auto; /*   align the div center */
+  padding: 5px 8px;
+  background-color: #d7f8e1;
+  color: #4bda6f;
+  border: 1px solid #95f179;
+  border-radius: 4px;
+  z-index: 10;
+  position: relative;
+}
+
+.message::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  background: rgb(33, 218, 110);
+  animation: anim 3s linear forwards;
+}
+
+@keyframes anim {
+  100% {
+    width: 0;
+  }
+}

@@ -3,18 +3,7 @@ import { userModel } from "../models/user.model.js";
 
 export async function verifyJWT(req, res, next) {
   try {
-  
-    console.log("request header authorization", req.header("Authorization"));
-    var token =
-      req.cookies?.accessToken || req.header("Authorization").split(" ")[1];
-
-    if (!token) {
-      token = req.header("Authorization")?.replace("Bearer ", "");
-    }
-    console.log("Token:", token);
-    if (!token) {
-      return res.status(401).json({ message: "Please Login." });
-    }
+    var token = req.cookies?.accessToken;
 
     try {
       var decodedToken = jwt.verify(token, process.env.Access_Token_Secret);
@@ -36,7 +25,7 @@ export async function verifyJWT(req, res, next) {
         .json({ message: "Invalid token. Please login again." });
     }
 
-    req.user = user._id;
+    req.userId = user._id;
     next();
   } catch (error) {
     return res

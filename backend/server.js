@@ -13,7 +13,7 @@ const allowedOrigins = [
   "https://educational-gamification-7df52f.netlify.app", 
 ];
 
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -32,21 +32,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use((err, req, res, next) => {
- 
-  if (err.message === "Not allowed by CORS") {
-    return res.status(403).json({
-      success: false,
-      message: "Access forbidden: Your origin domain is not permitted.",
-    });
-  }
 
-  next(err);
-});
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/auth", userRouter);
+app.use("/user", userRouter);
 
 
 app.use("/questions", questionRouter);

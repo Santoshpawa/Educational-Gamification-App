@@ -5,7 +5,7 @@ import { baseAPI } from "../utils/backendAPI";
 
 function Problem() {
   const [questions, setQuestions] = useState([]);
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.user);
   const isAuthenticated = !!user;
 
   useEffect(() => {

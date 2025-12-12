@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { baseAPI } from "../utils/backendAPI";
 import { useSelector } from "react-redux";
+import Message from "./message";
 
 // --- START: Component Logic (Unchanged) ---
 function Discuss() {
@@ -9,7 +10,7 @@ function Discuss() {
   const [topicClicked, setTopicClicked] = useState(null);
   const [thread, setThread] = useState("");
   const [threads, setThreads] = useState([]);
-  const { user } = useSelector((state) => state.auth);
+  const { user , message} = useSelector((state) => state.user);
 
   useEffect(() => {
     fetchDiscussion();

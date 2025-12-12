@@ -14,7 +14,7 @@ const submissionSchema = mongoose.Schema({
 const userSchema = mongoose.Schema({
   name: { type: String },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: { type: String },
   attempts: [submissionSchema],
   refreshToken: { type: String },
 });

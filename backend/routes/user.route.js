@@ -1,18 +1,21 @@
 import express from "express";
 import {
-  loginController,
-  logoutController,
-  signController,
+  userLogin,
+  userLogout,
+  userOAuthLogin,
+  userSignup,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { googleOAuthMiddleware } from "../middlewares/google.oauth.middleware.js";
 
 const userRouter = express.Router();
 
 
-userRouter.post("/signup", signController);
+userRouter.post("/signup", userSignup);
 
-userRouter.post("/login", loginController);
+userRouter.post("/login", userLogin);
+userRouter.post("/googleSignup", googleOAuthMiddleware ,userOAuthLogin);
 
-userRouter.get("/logout",verifyJWT, logoutController);
+userRouter.get("/logout",verifyJWT, userLogout);
 
 export default userRouter;

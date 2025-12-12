@@ -5,7 +5,8 @@ export const signupUser = createAsyncThunk(
   "auth/signupUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${baseAPI}/auth/signup`, {
+      console.log("Signing up user with email: ", email);
+      const response = await fetch(`${baseAPI}/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -14,8 +15,9 @@ export const signupUser = createAsyncThunk(
         body: JSON.stringify({ email, password }),
       });
       let data = await response.json();
-      console.log("Login response data : ",data);
+      console.log("signup response data: ", data);
       if (!response.ok) {
+        console.log("Signup failed with message: ", data);
         return rejectWithValue(data || "Failed to sign in.");
       }
       return data;
@@ -29,7 +31,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${baseAPI}/auth/login`, {
+      const response = await fetch(`${baseAPI}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +40,7 @@ export const loginUser = createAsyncThunk(
         body: JSON.stringify({ email, password }),
       });
       let data = await response.json();
-      console.log("response data: ", data);
+      console.log("login response data: ", data);
 
       if (!response.ok) {
         return rejectWithValue(data || "Login unsuccessful.");
@@ -56,13 +58,30 @@ const userSlice = createSlice({
     user: null,
     loading: false,
     error: null,
+    message: null,
   },
   reducers: {
-    logout: (state) => {
-      state.user = null;
+    setUser: (state, action) => {
+      console.log("Setting user in slice: ", action.payload);
+      state.user = action.payload;
+      console.log("User after setting in slice: ", state.user);
+    },
+    setMessage: (state, action) => {
+      state.message = action.payload;
+    },
+    clearMessage: (state) => {
+      state.message = null;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
     },
     clearError: (state) => {
       state.error = null;
+    },
+    logout: (state) => {
+      state.user = null;
+      state.error = null;
+      state.message = null;
     },
   },
   extraReducers: (builder) => {
@@ -72,12 +91,14 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(signupUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.email;
+        state.message = action.payload.message;
         state.loading = false;
         state.error = null;
       })
       .addCase(signupUser.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = action.payload.message;
+        state.message = null;
         state.loading = false;
         state.user = null;
       })
@@ -88,16 +109,25 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = action.payload.email;
+        state.message = action.payload.message;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload.message;
+        state.message = null;
         state.user = null;
       });
   },
 });
 
-export const { logout, clearError } = userSlice.actions;
+export const {
+  setUser,
+  setMessage,
+  clearMessage,
+  setError,
+  clearError,
+  logout,
+} = userSlice.actions;
 export default userSlice.reducer;

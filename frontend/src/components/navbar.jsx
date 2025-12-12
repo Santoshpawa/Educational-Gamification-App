@@ -3,28 +3,34 @@ import leetcode from "../assets/leetcode.jpg";
 import profile from "../assets/profile.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { logout } from "../utils/userSlice";
+import { logout, setUser } from "../utils/userSlice";
 import { baseAPI } from "../utils/backendAPI";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 function Navbar() {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.user);
   const [isDropDown, setDropDown] = useState(false);
   const dispatch = useDispatch();
 
-  const toggleDropDown = () => {
+  useEffect(() => {
+    if(!user){
+      dispatch(setUser(Cookies.get("user") || null));
+    } 
+  }, [user,dispatch]);
+
+    const toggleDropDown = () => {
     setDropDown((prev) => !prev);
   };
 
   const handleLogout = async () => {
-    dispatch(logout());
-    setDropDown(false);
-    console.log("Before logout api call");
-    let response = await fetch(`${baseAPI}/auth/logout`, {
+    let response = await fetch(`${baseAPI}/user/logout`, {
       method: "GET",
       credentials: "include",
     });
-    console.log("REsponse:", response);
-    console.log("After logout api call");
+     dispatch(logout());
+    setDropDown(false);
+    console.log("User after logout:", user);
   };
 
   return (
@@ -89,7 +95,7 @@ function Navbar() {
           </>
         ) : (
           <Link
-            to="/auth/signup"
+            to="/user/signup"
             className="px-2 text-gray-500 hover:text-gray-400"
           >
             Signup/Login

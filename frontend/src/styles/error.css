@@ -1,0 +1,28 @@
+.error-message {
+  width: fit-content;
+  margin: auto; /*   align the div center */
+  padding: 5px 8px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  z-index: 10;
+  position: relative;
+}
+
+.error-message::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  background: rgb(252, 129, 129);
+  animation: anim 3s linear forwards;
+}
+
+@keyframes anim {
+  100% {
+    width: 0;
+  }
+}
