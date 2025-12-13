@@ -1,6 +1,6 @@
 import { generateHashedPassword, userModel } from "../models/user.model.js";
 
-const options = {
+export const options = {
   httpOnly: true,
   secure: true,
   sameSite: "none",
@@ -17,7 +17,6 @@ async function generateAccessTokenAndRefreshToken(id) {
 }
 
 async function userSignup(req, res) {
-
   const { email, password } = req.body;
   try {
     let [user] = await userModel.find({ email });
@@ -40,7 +39,9 @@ async function userSignup(req, res) {
           message: "User signed up successfully.",
         });
     } else {
-      return res.status(400).json({ message: "User already present. Please Login." });
+      return res
+        .status(400)
+        .json({ message: "User already present. Please Login." });
     }
   } catch (error) {
     return res
@@ -93,7 +94,7 @@ async function userOAuthLogin(req, res) {
   const { email, picture } = req.user;
   try {
     let user = await userModel.findOne({ email });
-    
+
     if (!user) {
       user = await userModel.create({ email, picture });
     }
@@ -142,4 +143,27 @@ async function userLogout(req, res) {
   }
 }
 
-export { userSignup, userLogin, userOAuthLogin, userLogout };
+async function userRefresh(req, res) {
+  try {
+    let accessToken = req.cookies?.accessToken;
+    let refreshToken = req.cookies?.refreshToken;
+    let user = req.cookies?.user;
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .cookie("user", user)
+      .json({
+        user: user,
+        message:
+          "Sending access and refresh token again for User persistance on page refreshed",
+      });
+  } catch (error) {
+    console.log("Error during token refresh: ", error);
+    return res
+      .status(400)
+      .json({ message: "Something went wrong during page refresh" });
+  }
+}
+export { userSignup, userLogin, userOAuthLogin, userLogout, userRefresh };

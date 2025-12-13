@@ -5,19 +5,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { logout, setUser } from "../utils/userSlice";
 import { baseAPI } from "../utils/backendAPI";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
+
+
 
 function Navbar() {
   const { user } = useSelector((state) => state.user);
   const [isDropDown, setDropDown] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if(!user){
-      dispatch(setUser(Cookies.get("user") || null));
-    } 
-  }, [user,dispatch]);
+  
 
     const toggleDropDown = () => {
     setDropDown((prev) => !prev);

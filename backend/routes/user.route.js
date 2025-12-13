@@ -3,6 +3,7 @@ import {
   userLogin,
   userLogout,
   userOAuthLogin,
+  userRefresh,
   userSignup,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -17,5 +18,7 @@ userRouter.post("/login", userLogin);
 userRouter.post("/googleSignup", googleOAuthMiddleware ,userOAuthLogin);
 
 userRouter.get("/logout",verifyJWT, userLogout);
+
+userRouter.get("/refresh",userRefresh);
 
 export default userRouter;
