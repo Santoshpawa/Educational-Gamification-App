@@ -6,19 +6,13 @@
   },
   "rewrites": [
     {
-      "source": "/(?!static)(.*)",
+      "source": "/(.*)",
       "destination": "/backend/server.js"
     },
 
     {
       "source": "/(.*)",
       "destination": "/frontend/index.html"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*\\.(?:js|css|png|jpg|gif|ico|svg))",
-      "dest": "/frontend/$1"
     }
   ]
 }
