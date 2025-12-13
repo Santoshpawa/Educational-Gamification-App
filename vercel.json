@@ -1,0 +1,19 @@
+{
+  "functions": {
+    "backend/server.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(?!static)(.*)",
+      "destination": "/backend/server.js"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*\\.(?:js|css|png|jpg|gif|ico|svg))",
+      "dest": "/client/$1"
+    }
+  ]
+}
