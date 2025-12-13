@@ -146,6 +146,7 @@ async function userLogout(req, res) {
 async function userRefresh(req, res) {
   try {
     let accessToken = req.cookies?.accessToken;
+    console.log("Access token in refresh endpoint: ", accessToken);
     let refreshToken = req.cookies?.refreshToken;
     let user = req.cookies?.user;
 
