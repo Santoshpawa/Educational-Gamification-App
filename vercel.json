@@ -8,12 +8,17 @@
     {
       "source": "/(?!static)(.*)",
       "destination": "/backend/server.js"
+    },
+
+    {
+      "source": "/(.*)",
+      "destination": "/frontend/index.html"
     }
   ],
   "routes": [
     {
       "src": "/(.*\\.(?:js|css|png|jpg|gif|ico|svg))",
-      "dest": "/client/$1"
+      "dest": "/frontend/$1"
     }
   ]
 }
