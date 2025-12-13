@@ -1,4 +1,4 @@
-import algo from "../assets/algorithms.webp";
+import algo from "/algorithms.webp";
 
 function About() {
   const fadeColor = "transparent";

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import leetcode from "../assets/leetcode.jpg";
-import profile from "../assets/profile.jpg";
+import leetcode from "/leetcode.jpg";
+import profile from "/profile.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { logout, setUser } from "../utils/userSlice";

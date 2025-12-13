@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import leetcode from "../assets/leetcode2.jpg";
-import partition from "../assets/partition.png";
+import leetcode from "/leetcode2.jpg";
+import partition from "/partition.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setError,
