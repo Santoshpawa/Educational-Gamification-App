@@ -11,7 +11,7 @@ import { baseAPI } from "../utils/backendAPI";
 function Navbar() {
   const { user } = useSelector((state) => state.user);
   const [isDropDown, setDropDown] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   
 
