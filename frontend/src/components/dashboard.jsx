@@ -3,10 +3,11 @@ import Navbar from "./navbar";
 import About from "./about";
 import Problem from "./problem";
 import Discuss from "./discuss";
+import CodeRunnerPage from "./codeRunnerPage"
 import Signup from "./signup";
 import Login from "./login";
 import Profile from "./profile";
-import CodeRunnerPage from "./codeRunnerPage";
+
 
 function Dashboard() {
   return (
