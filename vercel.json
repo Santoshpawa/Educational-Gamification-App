@@ -1,15 +1,14 @@
 {
   "functions": {
     "backend/server.js": {
-      "runtime": "nodejs16.x"
+      "runtime": "nodejs20.x"
     }
   },
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "destination": "/backend/server.js"
     },
-
     {
       "source": "/(.*)",
       "destination": "/frontend/index.html"
