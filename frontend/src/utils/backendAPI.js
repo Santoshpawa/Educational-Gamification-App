@@ -1,4 +1,4 @@
-const baseAPI = import.meta.env.VITE_API_URL || '';
+const baseAPI = '';
 const localAPI = "http://localhost:3000";
 
 export { baseAPI };
