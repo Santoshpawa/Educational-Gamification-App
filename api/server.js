@@ -10,7 +10,7 @@ import discussonRouter from "./routes/discussion.route.js";
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173", 
-  "https://educational-gamification-7df52f.netlify.app", 
+  "https://educational-gamification-60irik5ae.vercel.app", 
 ];
 
 // app.set('trust proxy', 1);
