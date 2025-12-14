@@ -12,7 +12,7 @@ function Problem() {
     const fetchQuestions = async () => {
       try {
         console.log("in problem")
-        let response = await fetch(`${baseAPI}/questions`);
+        let response = await fetch(`${baseAPI}/api/questions`);
         let data = await response.json();
         console.log("Data:",data);
         setQuestions(data);

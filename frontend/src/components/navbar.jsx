@@ -20,7 +20,7 @@ function Navbar() {
   };
 
   const handleLogout = async () => {
-    let response = await fetch(`${baseAPI}/user/logout`, {
+    let response = await fetch(`${baseAPI}/api/user/logout`, {
       method: "GET",
       credentials: "include",
     });

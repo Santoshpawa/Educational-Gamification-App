@@ -2,6 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch , useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../utils/userSlice.jsx";
+import { baseAPI } from "../utils/backendAPI.js";
 export default function GoogleSignup() {
 
     const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export default function GoogleSignup() {
   async function handleSuccess(response) {
     const idToken = response.credential;
     try {
-      const res = await fetch("http://localhost:3000/user/googleSignup", {
+      const res = await fetch(`${baseAPI}/api/user/googleSignup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

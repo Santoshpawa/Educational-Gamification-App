@@ -18,7 +18,7 @@ function Discuss() {
 
   async function fetchDiscussion() {
     try {
-      let response = await fetch(`${baseAPI}/discuss`, {
+      let response = await fetch(`${baseAPI}/api/discuss`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +45,7 @@ function Discuss() {
       return;
     }
     try {
-      let res = await fetch(`${baseAPI}/discuss`, {
+      let res = await fetch(`${baseAPI}/api/discuss`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function Discuss() {
   async function fetchThreads(id) {
     setTopicClicked(id);
     try {
-      let response = await fetch(`${baseAPI}/discuss/${id}`, {
+      let response = await fetch(`${baseAPI}/api/discuss/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +93,7 @@ function Discuss() {
       return;
     }
     try {
-      let response = await fetch(`${baseAPI}/discuss/${topicId}`, {
+      let response = await fetch(`${baseAPI}/api/discuss/${topicId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

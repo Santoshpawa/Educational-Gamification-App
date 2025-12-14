@@ -36,12 +36,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/user", userRouter);
+app.use("/api/user", userRouter);
 
 
-app.use("/questions", questionRouter);
+app.use("/api/questions", questionRouter);
 
-app.use("/discuss", discussonRouter);
+app.use("/api/discuss", discussonRouter);
 
 const PORT = process.env.PORT || 3000;
 
