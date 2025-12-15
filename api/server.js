@@ -39,6 +39,17 @@ app.use("/api/questions", questionRouter);
 
 app.use("/api/discuss", discussonRouter);
 
+app.use("/", (req, res) => {
+  const error = new Error(`Route Not Found: ${req.originalUrl}`);
+
+  res.status(404).json({
+    success: false,
+    message: error.message,
+    path: req.originalUrl,
+    error: "The requested resource could not be found.",
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 
 connectToDb().then(() => {

@@ -17,7 +17,7 @@ function Problem() {
         console.log("Data:", data);
         setQuestions(data);
       } catch (error) {
-        console.error("Failed to fetch questions:", error);
+        console.log("Failed to fetch questions:", error);
       }
     };
     fetchQuestions();
