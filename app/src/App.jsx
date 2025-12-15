@@ -5,7 +5,7 @@ const GOOGLE_CLIENT_ID =
   "791827698898-bsgvccppulv1h1c7l7n62ggnv6s5el4n.apps.googleusercontent.com";
 
 import { useEffect } from "react";
-import { baseAPI } from "./utils/backendAPI.js";
+import { VITE_API_URL } from "./utils/backendAPI.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./utils/userSlice.jsx";
 import Cookies from "js-cookie";
@@ -21,7 +21,7 @@ function App() {
   },[]);
 
   async function fetchUser() {
-    let response = await fetch(`${baseAPI}/user/refresh`, {
+    let response = await fetch(`${VITE_API_URL}/user/refresh`, {
       method: "GET",
       credentials: "include",
     });
