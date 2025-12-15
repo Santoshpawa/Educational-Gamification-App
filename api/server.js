@@ -9,15 +9,14 @@ import discussonRouter from "./routes/discussion.route.js";
 
 const app = express();
 const allowedOrigins = [
-  "http://localhost:5173", 
-  "https://educational-gamification-60irik5ae.vercel.app", 
+  "http://localhost:5173",
+  "https://educational-gamification-60irik5ae.vercel.app",
 ];
 
 // app.set('trust proxy', 1);
 
 const corsOptions = {
   origin: function (origin, callback) {
-    
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -26,18 +25,15 @@ const corsOptions = {
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  optionsSuccessStatus: 200, 
+  optionsSuccessStatus: 200,
 };
 
-
 app.use(cors(corsOptions));
-
 
 app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/user", userRouter);
-
 
 app.use("/api/questions", questionRouter);
 

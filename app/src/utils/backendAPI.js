@@ -1,4 +1,4 @@
-const baseAPI = 'https://educational-gamification-cnuwwnj2e.vercel.app';
+const VITE_API_URL = import.meta.env.VITE_API_URL || '';
 const localAPI = "http://localhost:3000";
 
 export { baseAPI };
