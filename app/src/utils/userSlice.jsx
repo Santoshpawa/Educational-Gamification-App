@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseAPI } from "./backendAPI";
+import { VITE_API_URL } from "./backendAPI";
 
 export const signupUser = createAsyncThunk(
   "auth/signupUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
       console.log("Signing up user with email: ", email);
-      const response = await fetch(`${baseAPI}/api/user/signup`, {
+      const response = await fetch(`${VITE_API_URL}/api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${baseAPI}/api/user/login`, {
+      const response = await fetch(`${VITE_API_URL}/api/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

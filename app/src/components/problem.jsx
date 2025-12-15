@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { baseAPI } from "../utils/backendAPI";
+import { VITE_API_URL } from "../utils/backendAPI";
 
 function Problem() {
   const [questions, setQuestions] = useState([]);
@@ -11,10 +11,10 @@ function Problem() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        console.log("in problem")
-        let response = await fetch(`${baseAPI}/api/questions`);
+        console.log("in problem");
+        let response = await fetch(`${VITE_API_URL}/api/questions`);
         let data = await response.json();
-        console.log("Data:",data);
+        console.log("Data:", data);
         setQuestions(data);
       } catch (error) {
         console.error("Failed to fetch questions:", error);

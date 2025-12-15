@@ -4,27 +4,23 @@ import profile from "/profile.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { logout, setUser } from "../utils/userSlice";
-import { baseAPI } from "../utils/backendAPI";
-
-
+import { VITE_API_URL } from "../utils/backendAPI";
 
 function Navbar() {
   const { user } = useSelector((state) => state.user);
   const [isDropDown, setDropDown] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  
-
-    const toggleDropDown = () => {
+  const toggleDropDown = () => {
     setDropDown((prev) => !prev);
   };
 
   const handleLogout = async () => {
-    let response = await fetch(`${baseAPI}/api/user/logout`, {
+    let response = await fetch(`${VITE_API_URL}/api/user/logout`, {
       method: "GET",
       credentials: "include",
     });
-     dispatch(logout());
+    dispatch(logout());
     setDropDown(false);
     console.log("User after logout:", user);
   };
