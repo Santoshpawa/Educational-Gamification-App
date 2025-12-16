@@ -22,7 +22,7 @@ export default function GoogleSignup() {
       });
       if(res.ok){
         const data = await res.json();
-        dispatch(setUser(data.email));
+        dispatch(setUser(data));
         console.log("User after Google signup/login: ", user);
         navigate("/");
       }

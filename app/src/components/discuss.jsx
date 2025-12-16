@@ -93,6 +93,7 @@ function Discuss() {
       return;
     }
     try {
+      console.log("User adding the thread:", user); 
       let response = await fetch(`${VITE_API_URL}/api/discuss/${topicId}`, {
         method: "POST",
         headers: {
@@ -101,6 +102,7 @@ function Discuss() {
         body: JSON.stringify({ text: thread, email: user.email }),
         credentials: "include",
       });
+      
       if (!response.ok) {
         console.log("Response status of adding thread:", response.status);
         return;

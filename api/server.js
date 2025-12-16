@@ -45,7 +45,7 @@ app.use("/", (req, res) => {
   res.status(404).json({
     success: false,
     message: error.message,
-    path: req.originalUrl,
+    path: req.originalUrl, 
     error: "The requested resource could not be found.",
   });
 });

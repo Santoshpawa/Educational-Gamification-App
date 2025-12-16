@@ -6,8 +6,8 @@ async function addDiscussion(req, res) {
     
     const title = req.body.title;
     console.log("Title:", title);
-    console.log("Req.user", req.user);
-    const user = await userModel.findById(req.user);
+    console.log("Req.user", req.userId);
+    const user = await userModel.findById(req.userId);
     await discussModel.create({
       title,
       email: user.email,
@@ -15,6 +15,7 @@ async function addDiscussion(req, res) {
 
     return res.status(200).json({ message: "Discussion Title Added" });
   } catch (error) {
+    console.log("Error: ",error);
     return res
       .status(500)
       .json({ message: "Something went wrong in adding Discussion Title" });

@@ -10,12 +10,12 @@ async function addQuestionController(req, res) {
   }
 }
 
-async function getQuestionController(req, res) {
+async function getAllQuestionController(req, res) {
   try {
     let data = await questionModel.find();
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
-    res.json({ msg: "Something went wrong." });
+    res.status(500).json({ msg: "Something went wrong during fetching all questions." });
   }
 }
 
@@ -26,8 +26,8 @@ async function getQuestionByTitle(req, res) {
     let question = await questionModel.findOne({ title });
     res.json(question);
   } catch (error) {
-    res.json({ msg: "Something went wrong." });
+    res.status(500).json({ msg: "Something went wrong during fetching question by title. " });
   }
 }
 
-export { addQuestionController, getQuestionController, getQuestionByTitle };
+export { addQuestionController, getAllQuestionController, getQuestionByTitle };

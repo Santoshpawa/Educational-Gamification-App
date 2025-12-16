@@ -1,13 +1,15 @@
 .message {
   width: fit-content;
-  margin: auto; /*   align the div center */
+  height: 50px;
   padding: 5px 8px;
   background-color: #d7f8e1;
   color: #4bda6f;
   border: 1px solid #95f179;
   border-radius: 4px;
   z-index: 10;
-  position: relative;
+  top: 60px;
+  right:10px;
+  position: fixed;
 }
 
 .message::after {
