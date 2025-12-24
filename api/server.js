@@ -31,24 +31,16 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-
 app.use("/api/user", userRouter);
 
 app.use("/api/questions", questionRouter);
 
 app.use("/api/discuss", discussonRouter);
 
-app.use("/", (req, res) => {
-  const error = new Error(`Route Not Found: ${req.originalUrl}`);
-  console.error(error);
-  return res.status(404).json({
-    success: false,
-    message: error.message,
-    path: req.originalUrl, 
-    error: "The requested resource could not be found.",
-  });
+app.get("/", (req, res) => {
+  res.status(200).send("Backend Server is Running successfully!");
 });
-
+cd
 const PORT = process.env.PORT || 3000;
 
 connectToDb().then(() => {

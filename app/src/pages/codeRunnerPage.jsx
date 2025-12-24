@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useParams } from "react-router-dom";
-import { VITE_API_URL } from "../utils/backendAPI";
+import { backend_URL } from "../utils/backendAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, setMessage } from "../utils/userSlice";
 import Message from "../components/message";
@@ -17,7 +17,7 @@ function CodeRunnerPage() {
   // ✅ Fetch question details from backend
   useEffect(() => {
     const fetchQuestion = async () => {
-      const res = await fetch(`${VITE_API_URL}/api/questions/${title}`, {
+      const res = await fetch(`${backend_URL}/api/questions/${title}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -3,7 +3,7 @@ import leetcode from "/leetcode.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { logout, setUser } from "../utils/userSlice";
-import { VITE_API_URL } from "../utils/backendAPI";
+
 
 function Navbar() {
   const { user , picture} = useSelector((state) => state.user);
@@ -14,11 +14,8 @@ function Navbar() {
     setDropDown((prev) => !prev);
   };
   console.log("Navbar user picture: ", picture);
-  const handleLogout = async () => {
-    let response = await fetch(`${VITE_API_URL}/api/user/logout`, {
-      method: "GET",
-      credentials: "include",
-    });
+  const handleLogout =  () => {
+
     dispatch(logout());
     setDropDown(false);
     console.log("User after logout:", user);

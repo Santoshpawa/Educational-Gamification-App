@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { VITE_API_URL } from "../utils/backendAPI";
+import { backend_URL} from "../utils/backendAPI";
 
 function Problem() {
   const [questions, setQuestions] = useState([]);
@@ -12,7 +12,7 @@ function Problem() {
     const fetchQuestions = async () => {
       try {
         console.log("in problem");
-        let response = await fetch(`${VITE_API_URL}/api/questions`);
+        let response = await fetch(`${backend_URL}/api/questions`);
         let data = await response.json();
         console.log("Data:", data);
         setQuestions(data);

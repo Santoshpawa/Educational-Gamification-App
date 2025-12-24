@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { VITE_API_URL } from "../utils/backendAPI";
+import { backend_URL } from "../utils/backendAPI";
 import { useSelector } from "react-redux";
 import Message from "../components/message";
 
@@ -18,7 +18,7 @@ function Discuss() {
 
   async function fetchDiscussion() {
     try {
-      let response = await fetch(`${VITE_API_URL}/api/discuss`, {
+      let response = await fetch(`${backend_URL}/api/discuss`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +45,7 @@ function Discuss() {
       return;
     }
     try {
-      let res = await fetch(`${VITE_API_URL}/api/discuss`, {
+      let res = await fetch(`${backend_URL}/api/discuss`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function Discuss() {
   async function fetchThreads(id) {
     setTopicClicked(id);
     try {
-      let response = await fetch(`${VITE_API_URL}/api/discuss/${id}`, {
+      let response = await fetch(`${backend_URL}/api/discuss/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ function Discuss() {
     }
     try {
       console.log("User adding the thread:", user);
-      let response = await fetch(`${VITE_API_URL}/api/discuss/${topicId}`, {
+      let response = await fetch(`${backend_URL}/api/discuss/${topicId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
