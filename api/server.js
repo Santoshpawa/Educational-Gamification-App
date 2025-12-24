@@ -40,7 +40,7 @@ app.use("/api/discuss", discussonRouter);
 app.get("/", (req, res) => {
   res.status(200).send("Backend Server is Running successfully!");
 });
-cd
+
 const PORT = process.env.PORT || 3000;
 
 connectToDb().then(() => {
