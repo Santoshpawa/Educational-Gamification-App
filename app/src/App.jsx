@@ -1,14 +1,12 @@
-import Dashboard from "./components/dashboard";
+import Dashboard from "./pages/dashboard.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const GOOGLE_CLIENT_ID =
   "791827698898-bsgvccppulv1h1c7l7n62ggnv6s5el4n.apps.googleusercontent.com";
 
 import { useEffect } from "react";
-import { VITE_API_URL } from "./utils/backendAPI.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./utils/userSlice.jsx";
-import Cookies from "js-cookie";
 
 function App() {
   const { user } = useSelector((state) => state.user);
@@ -16,23 +14,14 @@ function App() {
 
   useEffect(() => {
     if (!user) {
-      fetchUser();
+      let userFromStorage = localStorage.getItem("user");
+      let pictureFromStorage = localStorage.getItem("picture");
+      if (userFromStorage && pictureFromStorage) {
+        dispatch(setUser({ user: userFromStorage, picture: pictureFromStorage }));
+      }
     }
-  },[]);
+  }, []);
 
-  async function fetchUser() {
-    let response = await fetch(`${VITE_API_URL}/user/refresh`, {
-      method: "GET",
-      credentials: "include",
-    });
-    let data = await response.json();
-    dispatch(setUser(data.user));
-  }
-  // useEffect(() => {
-  //   if(!user){
-  //     dispatch(setUser(Cookies.get("user") || null));
-  //   }
-  // }, [user,dispatch]);
   return (
     <>
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>

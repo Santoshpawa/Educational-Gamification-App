@@ -22,7 +22,11 @@ export default function GoogleSignup() {
       });
       if(res.ok){
         const data = await res.json();
-        dispatch(setUser(data));
+        const { token, user, picture } = data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", user);
+        localStorage.setItem("picture", picture);
+        dispatch(setUser({ user, picture }));
         console.log("User after Google signup/login: ", user);
         navigate("/");
       }

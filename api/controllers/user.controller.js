@@ -8,14 +8,6 @@ export const options = {
   priority: "High",
 };
 
-async function generateAccessTokenAndRefreshToken(id) {
-  const user = await userModel.findById(id);
-  const accessToken = user.generateAccessToken();
-  const refreshToken = user.generateRefreshToken();
-
-  return { accessToken, refreshToken };
-}
-
 async function userSignup(req, res) {
   const { email, password } = req.body;
   try {
@@ -23,21 +15,14 @@ async function userSignup(req, res) {
     if (!user) {
       const hashedPassword = await generateHashedPassword(password);
       user = await userModel.create({ email, password: hashedPassword });
-      const { accessToken, refreshToken } =
-        await generateAccessTokenAndRefreshToken(user._id);
-      user.refreshToken = refreshToken;
-      await user.save();
-      return res
-        .status(200)
-        .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
-        .cookie("user", email)
-        .cookie("picture", user.picture)
-        .json({
-          email,
-          picture: user.picture,
-          message: "User signed up successfully.",
-        });
+      const accessToken = user.generateAccessToken();
+
+      return res.status(200).json({
+        token: accessToken,
+        user: email,
+        picture: user.picture,
+        message: "User signed up successfully.",
+      });
     } else {
       return res
         .status(400)
@@ -64,22 +49,14 @@ async function userLogin(req, res) {
         return res.status(400).json({ message: "Wrong input Credentials" });
       }
 
-      let { accessToken, refreshToken } =
-        await generateAccessTokenAndRefreshToken(user._id);
+      let accessToken = user.generateAccessToken();
 
-      user.refreshToken = refreshToken;
-      await user.save();
-      return res
-        .status(200)
-        .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
-        .cookie("user", email)
-        .cookie("picture", user.picture)
-        .json({
-          email,
-          picture: user.picture,
-          message: "User logged in successfully.",
-        });
+      return res.status(200).json({
+        user: email,
+        token: accessToken,
+        picture: user.picture,
+        message: "User logged in successfully.",
+      });
     }
   } catch (error) {
     console.log(error);
@@ -99,20 +76,13 @@ async function userOAuthLogin(req, res) {
       user = await userModel.create({ email, picture });
     }
     console.log("OAuth Login - User after creation/check: ", user);
-    const { accessToken, refreshToken } =
-      await generateAccessTokenAndRefreshToken(user._id);
-    user.refreshToken = refreshToken;
-    await user.save();
-    return res
-      .status(200)
-      .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
-      .cookie("user", email)
-      .json({
-        email,
-        picture: user.picture,
-        message: "User Login Successfully",
-      });
+    const accessToken = user.generateAccessToken();
+    return res.status(200).json({
+      user: email,
+      picture,
+      token: accessToken,
+      message: "User Login Successfully",
+    });
   } catch (error) {
     console.log("Error in userOAuthLogin: ", error);
     return res
@@ -121,50 +91,4 @@ async function userOAuthLogin(req, res) {
   }
 }
 
-async function userLogout(req, res) {
-  try {
-    console.log("Logging out user with ID: ", req.userId);
-    let user = await userModel.findById(req.userId);
-    user.refreshToken = "";
-    await user.save();
-    console.log("User logged out: ", user.email);
-    return res
-      .status(200)
-      .clearCookie("accessToken", options)
-      .clearCookie("refreshToken", options)
-      .clearCookie("user")
-      .clearCookie("picture")
-      .json({ message: "User logged out successfully" });
-  } catch (error) {
-    console.log("Error during logout: ", error);
-    return res
-      .status(500)
-      .json({ message: "Something went wrong during logging out" });
-  }
-}
-
-async function userRefresh(req, res) {
-  try {
-    let accessToken = req.cookies?.accessToken;
-    console.log("Access token in refresh endpoint: ", accessToken);
-    let refreshToken = req.cookies?.refreshToken;
-    let user = req.cookies?.user;
-
-    return res
-      .status(200)
-      .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
-      .cookie("user", user)
-      .json({
-        user: user,
-        message:
-          "Sending access and refresh token again for User persistance on page refreshed",
-      });
-  } catch (error) {
-    console.log("Error during token refresh: ", error);
-    return res
-      .status(400)
-      .json({ message: "Something went wrong during page refresh" });
-  }
-}
-export { userSignup, userLogin, userOAuthLogin, userLogout, userRefresh };
+export { userSignup, userLogin, userOAuthLogin };

@@ -3,20 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import leetcode from "/leetcode2.jpg";
 import partition from "/partition.png";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setError,
-  clearError,
-  signupUser,
-} from "../utils/userSlice";
-import GoogleSignup from "./googleSignup";
-import Spinner from "./spinner";
-import Error from "./error";
+import { setError, clearError, signupUser } from "../utils/userSlice";
+import GoogleSignup from "../components/googleSignup";
+import Spinner from "../components/spinner";
+import Error from "../components/error";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { user, loading, error} = useSelector((state) => state.user);
+  const { user, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +28,6 @@ function Signup() {
       }, 3000);
     }
   }, [error, dispatch]);
-
 
   const handleSignup = async (e) => {
     e.preventDefault();

@@ -11,15 +11,18 @@ export const signupUser = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
-      let data = await response.json();
-      console.log("signup response data: ", data);
       if (!response.ok) {
         console.log("Signup failed with message: ", data);
         return rejectWithValue(data || "Failed to sign in.");
       }
+      let data = await response.json();
+      console.log("signup response data: ", data);
+      let { token, user, picture } = data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", user);
+      localStorage.setItem("picture", picture);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -36,15 +39,18 @@ export const loginUser = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
-      let data = await response.json();
-      console.log("login response data: ", data);
 
       if (!response.ok) {
         return rejectWithValue(data || "Login unsuccessful.");
       }
+      let data = await response.json();
+      console.log("login response data: ", data);
+      let { token, user, picture } = data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", user);
+      localStorage.setItem("picture", picture);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -59,11 +65,13 @@ const userSlice = createSlice({
     loading: false,
     error: null,
     message: null,
+    picture: null,
   },
   reducers: {
     setUser: (state, action) => {
       console.log("Setting user in slice: ", action.payload);
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.picture = action.payload.picture;
       console.log("User after setting in slice: ", state.user);
     },
     setMessage: (state, action) => {
@@ -82,6 +90,10 @@ const userSlice = createSlice({
       state.user = null;
       state.error = null;
       state.message = null;
+      state.picture = null;
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("picture");
     },
   },
   extraReducers: (builder) => {
@@ -91,9 +103,10 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(signupUser.fulfilled, (state, action) => {
-        state.user = action.payload.email;
+        state.user = action.payload.user;
         state.message = action.payload.message;
         state.loading = false;
+        state.picture = action.payload.picture;
         state.error = null;
       })
       .addCase(signupUser.rejected, (state, action) => {
@@ -109,9 +122,12 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.email;
+        state.user = action.payload.user;
+        state.picture = action.payload.picture;
         state.message = action.payload.message;
         state.error = null;
+        console.log("User after login fulfilled: ", state.user);
+        
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

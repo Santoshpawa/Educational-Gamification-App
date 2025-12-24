@@ -3,21 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import leetcode from "/leetcode2.jpg";
 import partition from "/partition.png";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setError,
-  clearError,
-  loginUser,
-} from "../utils/userSlice";
-import Spinner from "./spinner";
-import GoogleSignup from "./googleSignup";
-import Message from "./message";
-import Error from "./error";
+import { setError, clearError, loginUser } from "../utils/userSlice";
+import Spinner from "../components/spinner";
+import GoogleSignup from "../components/googleSignup";
+import Message from "../components/message";
+import Error from "../components/error";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { user, loading, error} = useSelector((state) => state.user);
+  const { user, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,8 +29,6 @@ function Login() {
       }, 3000);
     }
   }, [error, dispatch]);
-
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -94,7 +88,7 @@ function Login() {
           <img src={partition} alt="partition" className="m-auto" />
         </div>
         <GoogleSignup />
-      </div> 
+      </div>
       {error && <Error error={error} />}
     </>
   );

@@ -4,23 +4,21 @@ import { options } from "../controllers/user.controller.js";
 
 export async function verifyJWT(req, res, next) {
   try {
-    var token = req.cookies?.accessToken;
-
+    var token = req.headers["authorization"]?.split(" ")[1];
+    console.log("Token from header: ", token);
+    if (!token) {
+      res.status(401).json({ message: "Please Login." });
+      return;
+    }
     try {
       var decodedToken = jwt.verify(token, process.env.Access_Token_Secret);
-      var  user = await userModel.findById(decodedToken?._id);
+      var user = await userModel.findById(decodedToken?._id);
     } catch (error) {
-      token = req.cookies?.refreshToken;
+      return res
+        .status(400)
+        .json({ message: "Invalid token. Please login again." });
     }
-    if (!decodedToken) {
-      try {
-        decodedToken = jwt.verify(token, process.env.Refresh_Token_Secret);
-        user = await userModel.findById(decodedToken?._id);
-        res.cookie("accessToken", user.generateAccessToken(), options );
-      } catch (error) {
-        return res.status(401).json({ message: "Please Login." });
-      }
-    }
+   
     user = await userModel.findById(decodedToken?._id);
 
     if (!user) {

@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String },
   attempts: [submissionSchema],
-  refreshToken: { type: String },
+  picture: {type: String, default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9MB1JwKRsXEPgcjMb0uTHfSA09mMat-VY5g&s"}, 
 });
 
 const generateHashedPassword = async function (password) {
@@ -38,15 +38,7 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-userSchema.methods.generateRefreshToken = function () {
-  return jwt.sign(
-    {
-      _id: this._id,
-    },
-    process.env.Refresh_Token_Secret,
-    { expiresIn: process.env.Refresh_Token_Expire }
-  );
-};
+
 
 const userModel = mongoose.model("users", userSchema);
 

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { VITE_API_URL } from "../utils/backendAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, setMessage } from "../utils/userSlice";
-import Message from "./message";
+import Message from "../components/message";
 
 function CodeRunnerPage() {
   const { title } = useParams();
@@ -21,8 +21,8 @@ function CodeRunnerPage() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
-        credentials: "include",
       });
       console.log("raw Response:", res);
       const data = await res.json();
@@ -93,7 +93,7 @@ function CodeRunnerPage() {
 
   return (
     <>
-     {message && <Message message={message} />}
+      {message && <Message message={message} />}
       <div className="flex flex-row">
         <div style={{ padding: "20px" }} className="w-1/2">
           {question && (
@@ -175,7 +175,6 @@ function CodeRunnerPage() {
           </div>
         </div>
       </div>
-     
     </>
   );
 }

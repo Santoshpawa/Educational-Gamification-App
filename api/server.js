@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 
 import connectToDb from "./configs/mongo.config.js";
 import questionRouter from "./routes/question.route.js";
@@ -10,7 +9,7 @@ import discussonRouter from "./routes/discussion.route.js";
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://educational-gamification-60irik5ae.vercel.app",
+  "https://educational-gamification-7df52f.netlify.app/",
 ];
 
 // app.set('trust proxy', 1);
@@ -31,7 +30,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use(cookieParser());
+
 
 app.use("/api/user", userRouter);
 
@@ -41,8 +40,8 @@ app.use("/api/discuss", discussonRouter);
 
 app.use("/", (req, res) => {
   const error = new Error(`Route Not Found: ${req.originalUrl}`);
-
-  res.status(404).json({
+  console.error(error);
+  return res.status(404).json({
     success: false,
     message: error.message,
     path: req.originalUrl, 
