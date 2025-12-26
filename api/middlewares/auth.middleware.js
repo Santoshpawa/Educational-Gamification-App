@@ -3,9 +3,9 @@ import { userModel } from "../models/user.model.js";
 import { options } from "../controllers/user.controller.js";
 
 export async function verifyJWT(req, res, next) {
+  
   try {
     var token = req.headers["authorization"]?.split(" ")[1];
-    console.log("Token from header: ", token);
     if (!token) {
       res.status(401).json({ message: "Please Login." });
       return;

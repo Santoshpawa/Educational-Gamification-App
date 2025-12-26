@@ -2,20 +2,13 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const submissionSchema = mongoose.Schema({
-  questionId: {
-    type: mongoose.Schema.ObjectId,
-    ref: "questions",
-    required: true,
-  },
-  isCorrect: { type: Boolean, default: false },
-});
+
 
 const userSchema = mongoose.Schema({
   name: { type: String },
   email: { type: String, required: true, unique: true },
   password: { type: String },
-  attempts: [submissionSchema],
+  solvedQuestions: [String], 
   picture: {type: String, default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9MB1JwKRsXEPgcjMb0uTHfSA09mMat-VY5g&s"}, 
 });
 

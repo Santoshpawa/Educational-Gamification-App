@@ -38,7 +38,7 @@ app.use("/api/questions", questionRouter);
 app.use("/api/discuss", discussonRouter);
 
 app.get("/", (req, res) => {
-  res.status(200).send("Backend Server is Running successfully!");
+  res.status(200).json({message: "Backend Server is Running successfully!"});
 });
 
 const PORT = process.env.PORT || 3000;
